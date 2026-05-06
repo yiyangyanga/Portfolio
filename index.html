@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>红薯吉 Yang YY · 视觉设计作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+SC:wght@300;400;700;900&family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* 变量 */
+:root{
+  --green:#17f700;
+  --bg:#080808; --bg3:#1c1c1c;
+  --fg:#f0f0f0; --fg2:#9a9a9a; --fg3:#3a3a3a;
+  --bd:rgba(255,255,255,.07);
+  --bd2:rgba(255,255,255,.14);
+  --card:#121212;
+  --nav:rgba(8,8,8,.88);
+  --main-font:'阿里巴巴普惠体', 'Alibaba PuHuiTi', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  --r:22px;
+  --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
+  --ease-in-out-circ: cubic-bezier(0.85,0,0.15,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:72px;overflow-x:hidden;}
+body{font-family:var(--main-font);background:var(--bg);color:var(--fg);cursor:none;overflow-x:hidden;}
+::selection{background:var(--green);color:#000;}
+a{text-decoration:none;color:inherit;}
+img, video{display:block;width:100%;height:100%;object-fit:cover;}
+
+/* 光标 */
+#cd{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
+#cd.xl{width:56px;height:56px;}
+#cr{position:fixed;width:38px;height:38px;border:1.5px solid var(--green);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;transition:opacity .2s;}
+#cl{position:fixed;pointer-events:none;z-index:9997;font-size:9px;letter-spacing:.18em;color:#000;background:var(--green);padding:5px 10px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translate(16px,16px);font-family:var(--main-font);font-weight:700;}
+#cl.on{opacity:1;}
+
+/* Loader */
+#loader{position:fixed;inset:0;background:#080808;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s var(--ease-out-expo);}
+#loader.done{opacity:0;pointer-events:none;}
+.ld-n{font-size:12px;letter-spacing:.28em;color:#3a3a3a;margin-bottom:28px;text-transform:uppercase;}
+.ld-b{width:210px;height:1px;background:#1e1e1e;position:relative;overflow:hidden;}
+.ld-f{position:absolute;top:0;left:0;height:100%;background:var(--green);width:0%;}
+.ld-p{font-size:11px;color:var(--green);margin-top:12px;letter-spacing:.1em;}
+
+/* 导航 */
+header{position:fixed;top:0;width:100%;height:68px;background:var(--nav);backdrop-filter:blur(20px);display:flex;justify-content:space-between;align-items:center;padding:0 5%;z-index:1000;border-bottom:1px solid var(--bd);}
+.logo{font-size:16px;font-weight:700;letter-spacing:.14em;cursor:none;}
+.logo span{color:var(--green);}
+nav ul{display:flex;list-style:none;gap:32px;}
+nav ul li a{
+  font-size:11px; letter-spacing:.22em; color:var(--fg2); text-transform:uppercase; cursor:none;
+  transition:color .2s; position:relative; padding-bottom:6px;
+}
+nav ul li a::after{
+  content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px;
+  background:var(--green); transition:width .3s var(--ease-out-expo);
+}
+nav ul li a:hover{color:var(--fg);}
+nav ul li a:hover::after{width:100%;}
+
+/* Hero — 描边空心字 */
+#home{height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.hero-inner{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;z-index:2;}
+.hero-line{
+  font-size: clamp(56px, 13vw, 120px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  margin: 0.04em 0;
+  font-family: 'Poppins', 'Poppins-Black', var(--main-font);
+  color: transparent;
+  -webkit-text-stroke: 2.5px var(--fg);
+  text-stroke: 2.5px var(--fg);
+  paint-order: stroke fill;
+  transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+.hero-line em{ color: var(--green); font-style: normal; }
+
+.hero-inner:hover #hero-line1 {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+}
+.hero-inner:hover #hero-line2 {
+  color: #17f700 !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+}
+.hero-inner:hover #hero-line3 .keep-stroke {
+  color: transparent !important;
+  -webkit-text-stroke: 2.5px var(--fg) !important;
+  text-stroke: 2.5px var(--fg) !important;
+}
+.hero-inner:hover #hero-line3 .fill-white {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+}
+
+@media (max-width: 700px) {
+  .hero-line { -webkit-text-stroke: 2px var(--fg); }
+  .hero-inner:hover #hero-line3 .keep-stroke { -webkit-text-stroke: 2px var(--fg) !important; }
+}
+@media (max-width: 480px) {
+  .hero-line { -webkit-text-stroke: 1.5px var(--fg); }
+  .hero-inner:hover #hero-line3 .keep-stroke { -webkit-text-stroke: 1.5px var(--fg) !important; }
+}
+
+/* 跑马灯 */
+.ticker-wrap{width:100%;overflow:hidden;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);display:flex;align-items:center;height:54px;background:rgba(8,8,8,.6);backdrop-filter:blur(6px);}
+.ticker-track{display:flex;align-items:center;white-space:nowrap;animation:tk 22s linear infinite;height:100%;}
+.ti{font-size:13px;letter-spacing:.22em;color:var(--fg3);text-transform:uppercase;padding:0 28px;flex-shrink:0;}
+.tdot{color:var(--green);padding:0 6px;}
+@keyframes tk{to{transform:translateX(-50%);}}
+
+/* 通用 */
+.wrap{max-width:1160px;margin:0 auto;padding:130px 36px;}
+.sec-hdr{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:52px;}
+.slbl{font-size:11px;letter-spacing:.42em;color:var(--green);text-transform:uppercase;font-weight:700;}
+.stit{font-size:clamp(38px,5.8vw,74px);font-weight:700;line-height:1.02;letter-spacing:-.028em;}
+.stit em{font-style:italic;color:var(--green);}
+.ssub{font-size:clamp(14px,1.4vw,17px);color:var(--fg2);letter-spacing:.03em;font-weight:300;line-height:1.85;}
+.vmore{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:10px;
+  font-size:12px;
+  letter-spacing:.2em;
+  color:var(--fg);
+  text-transform:uppercase;
+  border-bottom:1px solid transparent;
+  cursor:none;
+  white-space:nowrap;
+  transition:color .2s,transform .2s,border-color .2s;
+}
+.vmore svg.arrow-icon{
+  width:18px;
+  height:18px;
+  fill:currentColor;
+  stroke:currentColor;
+  stroke-width:85;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+  transition:transform .2s;
+}
+.vmore:hover{
+  color:var(--green);
+  border-bottom-color:var(--green);
+  transform:translateY(-2px);
+}
+.vmore:hover svg.arrow-icon{
+  transform:translateX(3px);
+}
+
+/* ===== 新手风琴项目列表（来自0416-ds项目完成） ===== */
+.ac-item{
+  border:1px solid transparent;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  border-radius:0;
+  transition:margin .3s;
+  background:transparent;
+  background-clip:border-box;
+  margin-bottom:0;
+  position:relative;
+  cursor:pointer;
+}
+
+/* 绿色覆盖层 */
+.ac-item::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-color:var(--green);
+  z-index:1;
+  clip-path:polygon(0 50%,100% 50%,100% 50%,0 50%);
+  transition:clip-path .4s cubic-bezier(.1,.5,.5,1);
+  pointer-events:none;
+}
+.ac-item:hover::before{
+  clip-path:polygon(0 0,100% 0,100% 100%,0% 100%);
+}
+.ac-item:hover .scroll-text,
+.ac-item:hover .ac-sep,
+.ac-item:hover .project-year,
+.ac-item:hover .ac-more .arrow-base,
+.ac-item:hover .ac-more .arrow-filled{
+  color:#080808 !important;
+}
+
+/* 标题区域 */
+.ac-hdr{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:30px 28px 48px;
+  position:relative;
+  z-index:2;
+}
+.scroll-text-wrapper{width:100%;}
+
+/* 标题滚动填充效果 */
+.scroll-text{
+  font-size:clamp(32px,5vw,56px);
+  letter-spacing:-.01em;
+  line-height:1.1;
+  margin:0;
+  width:100%;
+  color:rgba(240,240,240,.15);
+  background:linear-gradient(to right,#f0f0f0,#f0f0f0) no-repeat;
+  -webkit-background-clip:text;
+  background-clip:text;
+  background-size:0%;
+  transition:background-size .5s cubic-bezier(.1,.5,.5,1);
+  animation-name:text-reveal;
+  animation-timing-function:linear;
+  animation-fill-mode:forwards;
+  animation-timeline:view();
+  animation-range:entry 100% cover 30%;
+  font-weight:700;
+}
+@keyframes text-reveal{
+  to{background-size:100%;}
+}
+
+/* 第二行布局 */
+.ac-info-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  margin-top:22px;
+  font-size:16px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:400;
+  position:relative;
+  z-index:2;
+}
+.info-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* × 符号滚动填充 */
+.ac-sep{
+  color:rgba(240,240,240,.3);
+  background:linear-gradient(to right,#ffffff,#ffffff) no-repeat;
+  -webkit-background-clip:text;
+  background-clip:text;
+  background-size:0%;
+  transition:background-size .5s cubic-bezier(.1,.5,.5,1);
+  animation-name:text-reveal;
+  animation-timing-function:linear;
+  animation-fill-mode:forwards;
+  animation-timeline:view();
+  animation-range:entry 100% cover 30%;
+  font-size:20px;
+  font-weight:300;
+}
+
+/* 年份滚动填充 */
+.project-year{
+  color:rgba(240,240,240,.3);
+  background:linear-gradient(to right,#ffffff,#ffffff) no-repeat;
+  -webkit-background-clip:text;
+  background-clip:text;
+  background-size:0%;
+  transition:background-size .5s cubic-bezier(.1,.5,.5,1);
+  animation-name:text-reveal;
+  animation-timing-function:linear;
+  animation-fill-mode:forwards;
+  animation-timeline:view();
+  animation-range:entry 100% cover 30%;
+}
+
+/* 右箭头 */
+.ac-more{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:22px;
+  position:relative;
+  z-index:2;
+  cursor:pointer;
+  pointer-events:none;
+}
+.ac-more svg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  fill:currentColor;
+  stroke:currentColor;
+  stroke-width:85;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+}
+.ac-more .arrow-base{
+  color:rgba(240,240,240,.3);
+}
+.ac-more .arrow-filled{
+  color:#ffffff;
+  clip-path:inset(0 100% 0 0);
+  animation-name:arrow-reveal;
+  animation-timing-function:linear;
+  animation-fill-mode:forwards;
+  animation-timeline:view();
+  animation-range:entry 100% cover 30%;
+}
+@keyframes arrow-reveal{
+  to{clip-path:inset(0 0% 0 0);}
+}
+
+/* 隐藏旧元素 */
+.ac-meta, .ac-arr{display:none;}
+
+/* 画廊浮层 */
+.gallery-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.92);
+  backdrop-filter:blur(8px);
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+}
+.gallery-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.gallery-container{
+  width:90vw;
+  max-width:1300px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:20px;
+  background:#121212;
+  border:1px solid rgba(255,255,255,.14);
+}
+.gallery-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+  padding:0 12px;
+}
+.gallery-title{font-size:24px;font-weight:700;color:#f0f0f0;}
+.gallery-close{
+  background:none;
+  border:none;
+  color:#f0f0f0;
+  font-size:32px;
+  cursor:pointer;
+}
+.gallery-close:hover{color:var(--green);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.gallery-item{
+  border-radius:0;
+  overflow:hidden;
+  background:#000;
+  aspect-ratio:16/10;
+}
+.gallery-item img, .gallery-item video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* 视觉集合 */
+.arc-sec{margin-top:80px;padding-top:60px;}
+.flex-row{display:flex;width:100%;gap:12px;margin-bottom:12px;overflow:hidden;height:260px;}
+.gi{position:relative;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid var(--bd);transition:flex .6s var(--ease-in-out-circ),filter .4s;cursor:zoom-in;flex:1;}
+.flex-row .gi:hover{flex:5;filter:none;z-index:2;}
+.flex-row:has(.gi:hover) .gi:not(:hover){flex:.3;filter:grayscale(80%) blur(2px) brightness(.55);}
+.gi img{pointer-events:auto;}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:stretch;}
+.tilt{
+  background:var(--card);
+  border:1px solid var(--bd2);
+  border-radius:var(--r);
+  padding:0;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+  height:100%;
+}
+.tilt img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-right .slbl{text-align:left;}
+.about-right .stit{text-align:left;}
+.about-right .ssub{text-align:left;}
+.skills{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px;}
+.sk{padding:10px 18px;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;font-size:11px;letter-spacing:.18em;color:var(--fg2);text-transform:uppercase;cursor:none;transition:all .2s var(--ease-out-expo);}
+.sk:hover{background:var(--green);color:#000;border-color:var(--green);}
+.brands{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;}
+.br{background:var(--card);padding:14px 22px;border-radius:12px;border:1px solid var(--bd);font-weight:700;font-size:13px;flex-grow:1;text-align:center;cursor:none;transition:all .3s var(--ease-out-expo);}
+.br:hover{background:var(--green);color:#000;border-color:var(--green);transform:translateY(-4px);}
+
+/* Footer */
+footer{padding:110px 36px 64px;text-align:center;border-top:1px dashed var(--bd);margin-top:80px;}
+.badge{display:inline-block;padding:10px 24px;border-radius:40px;background:rgba(23,247,0,.1);color:var(--green);font-weight:700;font-size:11px;letter-spacing:.22em;margin-bottom:34px;border:1px solid rgba(23,247,0,.35);text-transform:uppercase;}
+.bty{font-size:clamp(48px,10vw,120px);font-weight:900;background:linear-gradient(135deg,var(--fg) 0%,var(--green) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:60px;letter-spacing:-.04em;line-height:1;}
+.clinks{display:flex;justify-content:center;gap:20px;margin-bottom:80px;flex-wrap:wrap;max-width:920px;margin-left:auto;margin-right:auto;}
+.ccard{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:var(--r);
+  padding:38px 28px;
+  flex:1;
+  min-width:200px;
+  text-align:center;
+  cursor:none;
+  transition:transform .3s var(--ease-out-expo),box-shadow .3s,background .2s;
+}
+.ccard:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 24px 48px rgba(0,0,0,.28);
+  background:rgba(23,247,0,0.05);
+  border-color:var(--green);
+}
+.cico{font-size:2.4rem;margin-bottom:14px;display:block;}
+.ctit{font-size:clamp(16px,1.5vw,20px);font-weight:700;margin-bottom:7px;}
+.ci{font-size:13px;color:var(--fg2);font-weight:300;}
+.copy{color:var(--fg3);font-size:11px;letter-spacing:.15em;margin-top:60px;text-transform:uppercase;}
+
+/* Lightbox & Archive */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:4000;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px);}
+.lb.on{opacity:1;pointer-events:auto;}
+.lb img, .lb video{max-width:96vw;max-height:94vh;border-radius:16px;object-fit:contain;}
+.lb-x{position:absolute;top:28px;right:38px;font-size:3rem;font-weight:200;color:#fff;background:none;border:none;cursor:none;transition:color .2s,transform .2s;}
+.lb-x:hover{color:var(--green);transform:scale(1.1);}
+.am{position:fixed;inset:0;background:var(--bg);z-index:3500;opacity:0;pointer-events:none;transition:opacity .4s;overflow-y:auto;padding:100px 5%;}
+.am.on{opacity:1;pointer-events:auto;}
+.am-x{position:fixed;top:28px;right:38px;font-size:3rem;font-weight:200;cursor:none;background:none;border:none;color:var(--fg);transition:color .2s,transform .2s;}
+.am-x:hover{color:var(--green);transform:scale(1.1);}
+.mason{column-count:3;column-gap:16px;margin-top:36px;}
+.mason img{width:100%!important;height:auto!important;border-radius:14px;margin-bottom:16px;cursor:zoom-in;border:1px solid var(--bd);transition:transform .2s,filter .2s;display:block;}
+.mason img:hover{transform:scale(1.02);filter:brightness(1.06);}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease-out-expo),transform .9s var(--ease-out-expo);}
+.rv.d1{transition-delay:.15s;}
+.rv.d2{transition-delay:.3s;}
+.rv.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;}
+}
+@media(max-width:700px){
+  .wrap{padding:80px 20px;}
+  .flex-row{gap:8px; height:auto; flex-wrap:wrap;}
+  .gi{flex:1 1 48%!important;height:180px;}
+  .mason{column-count:2;}
+  .clinks{gap:12px;}
+  .hero-line{ font-size: clamp(44px, 11vw, 90px); -webkit-text-stroke: 2px var(--fg); }
+  .ac-hdr{padding:24px 18px 40px;}
+  .ac-sep{font-size:18px;}
+  .ac-info-row{font-size:14px;}
+  .ac-more{width:28px;height:19px;}
+}
+@media(max-width:480px){
+  .mason{column-count:1;}
+  nav ul{gap:14px;}
+  .hero-line{ font-size: clamp(36px, 10vw, 70px); white-space: normal; -webkit-text-stroke: 1.5px var(--fg); }
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+<div id="cl">VIEW ↗</div>
+<div id="loader"><div class="ld-n">Yang YY · 视觉设计者</div><div class="ld-b"><div class="ld-f" id="ldf"></div></div><div class="ld-p" id="ldp">0%</div></div>
+
+<header><div class="logo" onclick="scrollTo({top:0,behavior:'smooth'})">YAMMY <span>JI</span></div><nav><ul><li><a href="#home">Home</a></li><li><a href="#works">Work</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul></nav></header>
+
+<!-- HERO 区域 -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-line" id="hero-line1">INNOVATE</div>
+    <div class="hero-line" id="hero-line2">ENJOY</div>
+    <div class="hero-line" id="hero-line3">
+      <span class="keep-stroke">AND</span> <span class="fill-white">BE HAPPY</span>
+    </div>
+  </div>
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ti">Graphic Design</span><span class="tdot">✦</span><span class="ti">UX Design</span><span class="tdot">✦</span>
+      <span class="ti">3D Art</span><span class="tdot">✦</span><span class="ti">Motion Design</span><span class="tdot">✦</span>
+      <span class="ti">Video Editing</span><span class="tdot">✦</span><span class="ti">Interaction Design</span><span class="tdot">✦</span>
+      <span class="ti">Branding</span><span class="tdot">✦</span><span class="ti">Typography</span><span class="tdot">✦</span>
+      <span class="ti">Graphic Design</span><span class="tdot">✦</span><span class="ti">UX Design</span><span class="tdot">✦</span>
+      <span class="ti">3D Art</span><span class="tdot">✦</span><span class="ti">Motion Design</span><span class="tdot">✦</span>
+      <span class="ti">Video Editing</span><span class="tdot">✦</span><span class="ti">Interaction Design</span><span class="tdot">✦</span>
+      <span class="ti">Branding</span><span class="tdot">✦</span><span class="ti">Typography</span><span class="tdot">✦</span>
+    </div>
+  </div>
+</section>
+
+<section id="works" class="wrap">
+  <div class="sec-hdr rv">
+    <div class="slbl">Selected Work · 精选作品</div>
+    <h2 class="stit">Creative<br><em>Projects</em></h2>
+    <!-- 原副标题已删除 -->
+  </div>
+
+  <!-- 新手风琴项目列表（来自0416-ds项目完成，已去掉最上和最下面提示文字） -->
+  <div class="rv d1">
+
+    <!-- 项目1 -->
+    <div class="ac-item" data-project="p1">
+      <div class="ac-hdr">
+        <div class="scroll-text-wrapper">
+          <h3 class="scroll-text">Business Project · Nebula Studio</h3>
+        </div>
+        <div class="ac-info-row">
+          <div class="info-left">
+            <span class="ac-sep">×</span>
+            <span class="project-year">2024 — 2025</span>
+            <span class="ac-sep">×</span>
+          </div>
+          <span class="ac-more" data-project="p1">
+            <svg class="arrow-base" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+            <svg class="arrow-filled" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目2 -->
+    <div class="ac-item" data-project="p2">
+      <div class="ac-hdr">
+        <div class="scroll-text-wrapper">
+          <h3 class="scroll-text">Gaming Visual Design · Cyber Oasis</h3>
+        </div>
+        <div class="ac-info-row">
+          <div class="info-left">
+            <span class="ac-sep">×</span>
+            <span class="project-year">2023 — 2024</span>
+            <span class="ac-sep">×</span>
+          </div>
+          <span class="ac-more" data-project="p2">
+            <svg class="arrow-base" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+            <svg class="arrow-filled" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目3 -->
+    <div class="ac-item" data-project="p3">
+      <div class="ac-hdr">
+        <div class="scroll-text-wrapper">
+          <h3 class="scroll-text">Brand Identity · Aurora Labs</h3>
+        </div>
+        <div class="ac-info-row">
+          <div class="info-left">
+            <span class="ac-sep">×</span>
+            <span class="project-year">2023</span>
+            <span class="ac-sep">×</span>
+          </div>
+          <span class="ac-more" data-project="p3">
+            <svg class="arrow-base" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+            <svg class="arrow-filled" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目4 -->
+    <div class="ac-item" data-project="p4">
+      <div class="ac-hdr">
+        <div class="scroll-text-wrapper">
+          <h3 class="scroll-text">Motion &amp; 3D · Digital Dream</h3>
+        </div>
+        <div class="ac-info-row">
+          <div class="info-left">
+            <span class="ac-sep">×</span>
+            <span class="project-year">2022 — 2023</span>
+            <span class="ac-sep">×</span>
+          </div>
+          <span class="ac-more" data-project="p4">
+            <svg class="arrow-base" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+            <svg class="arrow-filled" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+              <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="arc-sec">
+    <div class="sec-hdr rv">
+      <div class="slbl">Visual Collections · 视觉集合</div>
+      <h2 class="stit" style="font-size:clamp(30px,4.2vw,56px);">Hover to<br><em>Focus</em></h2>
+      <p class="ssub">Click any image to enlarge · 共8幅</p>
+      <a href="#" class="vmore tvm">
+        EXPLORE ALL
+        <svg class="arrow-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve">
+          <polygon points="874.22,301.99 845.93,330.27 1078.43,562.77 389.5,562.77 389.5,604.75 1176.97,604.75"/>
+        </svg>
+      </a>
+    </div>
+    <div class="flex-row rv">
+      <div class="gi"><img src="https://picsum.photos/seed/v1/700/600" alt="visual 1" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v2/700/700" alt="visual 2" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v3/700/900" alt="visual 3" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v4/700/800" alt="visual 4" loading="lazy"></div>
+    </div>
+    <div class="flex-row rv d1">
+      <div class="gi"><img src="https://picsum.photos/seed/v5/700/650" alt="visual 5" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v6/700/850" alt="visual 6" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v7/700/720" alt="visual 7" loading="lazy"></div>
+      <div class="gi"><img src="https://picsum.photos/seed/v8/700/950" alt="visual 8" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="wrap">
+  <div class="about-grid">
+    <div class="rv">
+      <div class="tilt"><img src="https://picsum.photos/seed/yavatar/800/600" alt="Yang YY"></div>
+    </div>
+    <div class="rv d1 about-right">
+      <div class="slbl">About · 关于我</div>
+      <h2 class="stit">Hi, I'm<br><em>Yang YY</em></h2>
+      <p class="ssub" style="margin-bottom:0;">专注于平面设计、UX设计、3D艺术与视频创作。曾与 Apple、Google、Tesla、Tencent 等品牌合作，致力于将每一个创意项目做到极致。</p>
+      <div class="skills">
+        <span class="sk">Graphic Design</span><span class="sk">UX / UI</span><span class="sk">3D Art</span><span class="sk">Motion Design</span>
+        <span class="sk">Video Editing</span><span class="sk">Typography</span><span class="sk">Branding</span><span class="sk">Illustration</span>
+      </div>
+      <div class="brands">
+        <div class="br">Apple</div><div class="br">Google</div><div class="br">Tesla</div><div class="br">Tencent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="badge">🟢 AVAILABLE FOR FREELANCE</div>
+  <div class="bty">THANK YOU</div>
+  <div class="clinks">
+    <div class="ccard" onclick="copyText(this)"><span class="cico">✉️</span><div class="ctit">Email</div><p class="ci">hello@yammyji.com</p></div>
+    <div class="ccard" onclick="copyText(this)"><span class="cico">💬</span><div class="ctit">WeChat</div><p class="ci">YammyJI_Design</p></div>
+    <div class="ccard" onclick="copyText(this)"><span class="cico">🎨</span><div class="ctit">Zcool / Behance</div><p class="ci">YammyJI</p></div>
+  </div>
+  <p class="copy">© 2026 Yang YY · 保留所有灵感</p>
+</footer>
+
+<div class="lb" id="lb"><button class="lb-x" id="lbx">✕</button><img src="" alt="" id="lbi"><video src="" id="lbv" controls autoplay style="display:none;" preload="none" playsinline></video></div>
+<div class="am" id="am"><button class="am-x" id="amx">✕</button><div style="max-width:1300px;margin:0 auto;"><div class="slbl" id="am-slbl">完整作品档案库</div><h2 class="stit" id="am-stit" style="margin-bottom:10px;text-align:left;">Full Archive</h2><p class="ssub" id="am-ssub" style="text-align:left;">All visual experiments, commercial projects &amp; daily sketches</p><div class="mason" id="mason"></div></div></div>
+
+<!-- 画廊浮层（来自0416-ds项目完成） -->
+<div class="gallery-overlay" id="galleryOverlay">
+  <div class="gallery-container">
+    <div class="gallery-header">
+      <div class="gallery-title" id="galleryTitle">项目图库</div>
+      <button class="gallery-close" id="galleryClose">✕</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  const projectData = {
+    p1: { title: "Nebula Studio Archive", subtitle: "Commercial visual branding · 4 samples", images: ["https://picsum.photos/seed/p1a/800/1000", "https://picsum.photos/seed/p1b/800/600", "https://picsum.photos/seed/p1c/800/1200", "https://picsum.photos/seed/p1d/800/900"] },
+    p2: { title: "Cyber Oasis Visuals", subtitle: "Environment & interface · 4 samples", images: ["https://picsum.photos/seed/p2a/800/800", "https://picsum.photos/seed/p2b/800/1100", "https://picsum.photos/seed/p2c/800/900", "https://picsum.photos/seed/p2d/800/700"] },
+    p3: { title: "Aurora Labs Identity", subtitle: "Brand system · 4 samples", images: ["https://picsum.photos/seed/p3a/800/1200", "https://picsum.photos/seed/p3b/800/1000", "https://picsum.photos/seed/p3c/800/700", "https://picsum.photos/seed/p3d/800/1300"] },
+    p4: { title: "Digital Dream Series", subtitle: "3D & motion · 4 samples", images: ["https://picsum.photos/seed/p4a/800/900", "https://picsum.photos/seed/p4b/800/1300", "https://picsum.photos/seed/p4c/800/800", "https://picsum.photos/seed/p4d/800/1100"] }
+  };
+
+  /* 画廊数据（来自0416-ds项目完成） */
+  const galleryData = {
+    p1: {
+      title: 'Nebula Studio · 商业视觉',
+      items: [
+        { type: 'video', src: 'http://www.w3school.com.cn/example/html5/mov_bbb.mp4', poster: 'https://picsum.photos/seed/p1a/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p1b/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p1c/400/300' },
+        { type: 'video', src: 'https://www.w3schools.com/html/movie.mp4', poster: 'https://picsum.photos/seed/p1d/400/300' }
+      ]
+    },
+    p2: {
+      title: 'Cyber Oasis · 游戏视觉',
+      items: [
+        { type: 'video', src: 'https://media.w3.org/2010/05/sintel/trailer.mp4', poster: 'https://picsum.photos/seed/p2a/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p2b/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p2c/400/300' }
+      ]
+    },
+    p3: {
+      title: 'Aurora Labs · 品牌识别',
+      items: [
+        { type: 'image', src: 'https://picsum.photos/seed/p3a/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p3b/400/300' },
+        { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', poster: 'https://picsum.photos/seed/p3c/400/300' }
+      ]
+    },
+    p4: {
+      title: 'Digital Dream · 动态/3D',
+      items: [
+        { type: 'image', src: 'https://picsum.photos/seed/p4a/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p4b/400/300' },
+        { type: 'image', src: 'https://picsum.photos/seed/p4c/400/300' }
+      ]
+    }
+  };
+
+  const defaultArchiveImages = [
+    "https://picsum.photos/seed/archive1/800/1000",
+    "https://picsum.photos/seed/archive2/800/1200",
+    "https://picsum.photos/seed/archive3/800/900",
+    "https://picsum.photos/seed/archive4/800/1100"
+  ];
+
+  function copyText(el) {
+    const text = el.querySelector('.ci').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const cl = document.getElementById('cl');
+      const orig = cl.textContent;
+      cl.textContent = "COPIED! ✅";
+      cl.style.background = "#fff";
+      setTimeout(() => { cl.textContent = orig; cl.style.background = "var(--green)"; }, 1500);
+    });
+  }
+
+  function openProjectGallery(pid, e) {
+    if (e) e.stopPropagation();
+    const data = projectData[pid];
+    const mason = document.getElementById('mason');
+    const am = document.getElementById('am');
+    document.getElementById('am-slbl').textContent = "PROJECT ARCHIVE";
+    document.getElementById('am-stit').textContent = data.title;
+    document.getElementById('am-ssub').textContent = data.subtitle;
+    mason.innerHTML = '';
+    data.images.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.loading = 'lazy';
+      mason.appendChild(img);
+    });
+    am.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fillDefaultArchive() {
+    const mason = document.getElementById('mason');
+    mason.innerHTML = '';
+    defaultArchiveImages.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.loading = 'lazy';
+      mason.appendChild(img);
+    });
+  }
+
+  (function(){
+    var ldf=document.getElementById('ldf'), ldp=document.getElementById('ldp'), loader=document.getElementById('loader'), p=0;
+    var iv=setInterval(function(){
+      p=Math.min(100,p+Math.random()*15+5);
+      ldf.style.width=p+'%';
+      ldp.textContent=Math.floor(p)+'%';
+      if(p>=100){
+        clearInterval(iv);
+        setTimeout(function(){ loader.classList.add('done'); startHeroGSAP(); },400);
+      }
+    },60);
+
+    function startHeroGSAP(){
+      if(typeof gsap==='undefined') return;
+      const lines = ['#hero-line1','#hero-line2','#hero-line3'];
+      lines.forEach(s => {
+        const el = document.querySelector(s);
+        if(el) el.style.visibility = 'visible';
+      });
+
+      const tl = gsap.timeline({defaults:{ease:'expo.out'}});
+      tl.fromTo('#hero-line1', {opacity:0, y:48}, {opacity:1, y:0, duration:1.0}, 0.1);
+      tl.fromTo('#hero-line2', {opacity:0, y:48}, {opacity:1, y:0, duration:1.0}, 0.35);
+      tl.fromTo('#hero-line3', {opacity:0, y:48}, {opacity:1, y:0, duration:1.0}, 0.6);
+    }
+
+    var cd=document.getElementById('cd'), cr=document.getElementById('cr'), cl=document.getElementById('cl'), mx=0, my=0, rx=0, ry=0;
+    document.addEventListener('mousemove',function(e){
+      mx=e.clientX; my=e.clientY;
+      cd.style.left=mx+'px'; cd.style.top=my+'px';
+      cl.style.left=mx+'px'; cl.style.top=my+'px';
+    });
+    (function loop(){
+      rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+      cr.style.left=rx+'px'; cr.style.top=ry+'px';
+      requestAnimationFrame(loop);
+    })();
+
+    function setCursor(text){
+      if(text) { cl.textContent = text; cl.classList.add('on'); }
+      cd.classList.add('xl');
+    }
+    function resetCursor(){
+      cl.textContent = "VIEW ↗"; cl.classList.remove('on'); cd.classList.remove('xl');
+    }
+
+    document.querySelectorAll('.gi,.hcta,.sk,.br,.tvm').forEach(el=>{
+      el.addEventListener('mouseenter',()=>setCursor());
+      el.addEventListener('mouseleave',resetCursor);
+    });
+    document.querySelectorAll('.ccard').forEach(el=>{
+      el.addEventListener('mouseenter',()=>setCursor("CLICK TO COPY"));
+      el.addEventListener('mouseleave',resetCursor);
+    });
+    document.querySelectorAll('.hero-line').forEach(el=>{
+      el.addEventListener('mouseenter',()=>setCursor());
+      el.addEventListener('mouseleave',resetCursor);
+    });
+    /* 新手风琴项目光标效果 */
+    document.querySelectorAll('.ac-item').forEach(el=>{
+      el.addEventListener('mouseenter',()=>setCursor());
+      el.addEventListener('mouseleave',resetCursor);
+    });
+
+    /* 画廊功能（来自0416-ds项目完成） */
+    var galleryOverlay = document.getElementById('galleryOverlay');
+    var galleryTitle = document.getElementById('galleryTitle');
+    var galleryGrid = document.getElementById('galleryGrid');
+    var galleryCloseBtn = document.getElementById('galleryClose');
+
+    function openGallery(projectId) {
+      var data = galleryData[projectId];
+      if (!data) return;
+      galleryTitle.textContent = data.title;
+      galleryGrid.innerHTML = '';
+      data.items.forEach(function(item) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'gallery-item';
+        if (item.type === 'video') {
+          var video = document.createElement('video');
+          video.src = item.src;
+          video.poster = item.poster || '';
+          video.controls = true;
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.style.width = '100%';
+          video.style.height = '100%';
+          video.style.objectFit = 'cover';
+          wrapper.appendChild(video);
+        } else {
+          var img = document.createElement('img');
+          img.src = item.src;
+          img.alt = '';
+          img.loading = 'lazy';
+          wrapper.appendChild(img);
+        }
+        galleryGrid.appendChild(wrapper);
+      });
+      galleryOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGallery() {
+      galleryOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      /* 暂停画廊中的视频 */
+      galleryGrid.querySelectorAll('video').forEach(function(v){ v.pause(); });
+    }
+
+    /* 点击新手风琴项目打开画廊 */
+    document.querySelectorAll('.ac-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var projectId = item.dataset.project;
+        if (projectId) openGallery(projectId);
+      });
+    });
+
+    galleryCloseBtn.addEventListener('click', closeGallery);
+    galleryOverlay.addEventListener('click', function(e) {
+      if (e.target === galleryOverlay) closeGallery();
+    });
+
+    var lb=document.getElementById('lb'), lbi=document.getElementById('lbi'), lbv=document.getElementById('lbv'), lbx=document.getElementById('lbx');
+    function openLb(src, isVideo){
+      if(isVideo){ lbi.style.display='none'; lbv.style.display='block'; lbv.src=src; }
+      else { lbv.style.display='none'; lbi.style.display='block'; lbi.src=src; }
+      lb.classList.add('on');
+      document.body.style.overflow='hidden';
+    }
+    function closeLb(){
+      lb.classList.remove('on');
+      lbv.pause();
+      document.body.style.overflow='';
+    }
+    lbx.addEventListener('click',closeLb);
+
+    document.body.addEventListener('click',function(e){
+      var t = e.target;
+      if(t.closest('.gi')){
+        var gi = t.closest('.gi');
+        var img = gi.querySelector('img');
+        if(img) openLb(img.src, false);
+      }
+      else if(t.tagName === 'IMG' && t.closest('#mason')){
+        openLb(t.src, false);
+      }
+    });
+
+    var am=document.getElementById('am'), amx=document.getElementById('amx');
+    function closeAm(){
+      am.classList.remove('on');
+      document.body.style.overflow='';
+    }
+
+    document.querySelectorAll('.tvm').forEach(el=>el.addEventListener('click',(e)=>{
+      e.preventDefault();
+      document.getElementById('am-slbl').textContent = "完整作品档案库";
+      document.getElementById('am-stit').textContent = "Full Archive";
+      document.getElementById('am-ssub').textContent = "Featured selections · 4 visual samples";
+      fillDefaultArchive();
+      am.classList.add('on');
+      document.body.style.overflow='hidden';
+    }));
+
+    amx.addEventListener('click',closeAm);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (galleryOverlay.classList.contains('active')) closeGallery();
+        else if (lb.classList.contains('on')) closeLb();
+        else if (am.classList.contains('on')) closeAm();
+      }
+    });
+
+    var obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('in');});},{threshold:.1});
+    document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',function(e){
+        var id=this.getAttribute('href');
+        if(!id||id==='#')return;
+        var t=document.querySelector(id);
+        if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+      });
+    });
+  })();
+</script>
+</body>
+</html>
